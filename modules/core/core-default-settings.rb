@@ -1,0 +1,57 @@
+# Where are your shoots on your drive.  
+# TOG will not put actual files here.. it will create a directories for every shoot 
+$shoots = Dir.home + '/shoots/'
+$quicklink = Dir.home + '/Desktop/current'
+
+# Do you want TOG to add, e.g. 2020-05-05 to any shoot directory it creates for you
+$add_date_to_shoot_directories = "yes"
+
+# In a shoot directory, where will the FINAL images be kept.  This is a special location
+# as many other modules want to know about your final images.
+$raw_file_directory = 'raws'
+$workflow1_directory = '1-pp'
+$workflow2_directory = '2-gimp'
+$workflow3_directory = ''
+$workflow4_directory = ''
+$workflow5_directory = ''
+$final_image_directory = '3-finals'
+
+
+def post1
+	move_jpgs_to_next
+end
+def post2
+	move_jpgs_to_next
+end
+def post3
+	move_jpgs_to_next
+end
+def post4
+	move_jpgs_to_next
+end
+def post5
+	move_jpgs_to_next
+end
+
+# What other directories do you want auto created to keep your workflow clean and tidy.
+# The defaults of for raws,  working and discards could be the bare minimum:
+# -- raws:     where you put your raw files from the camera
+# -- working:  where you export jpgs from your raw editor and do other work on them before moving them to the final jpg directory
+# -- discards: where you put jpgs that you've worked on but are throwing away.
+#
+# WHY THIS IS IMPORTANT. You can use TOG to move files from one stage to the next.  A more complex strategy could be:
+# "1-raws, 2-portraitpro, 3-gimp, discards"
+# In this case,  your workflow is exporting from raw editor into 2-portraitpro folder..
+#  -- editing in portraitpro then moving the files to the gimp folder
+#  -- working on them in gimp and then moving the final jpgs to the final jpg directory
+#
+# Want any other auto-created directories?  Add them here devided by commas.
+# It's ok to create directories and subdirectores,  
+# e.g. "discards, discards/jpgs, discards/other "
+$other_shoot_directories = "discards, proofs"
+
+
+###################################################################################################################33
+# Don't touch unless you know what you're doing
+# The file that TOG uses to remember what set you are working on.
+$current_set_file = Dir.home + '/.tog.txt'

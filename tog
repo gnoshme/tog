@@ -1,0 +1,65 @@
+#! /usr/bin/env ruby
+require 'fileutils'
+require 'pathname'
+
+$togpath = File.dirname(Pathname.new(__FILE__).realpath)
+$debuglevel = 0
+if $debuglevel > 0
+  require 'pry'
+end
+
+# Load method libraries
+load ($togpath + '/lib/ui.rb')
+load ($togpath + '/lib/files.rb')
+load ($togpath + '/lib/mods.rb')
+load ($togpath + '/lib/sets.rb')
+
+
+# Setup global vars
+$global_menu = []
+$set_menu = []
+$power_user_help = {}
+$set_roots = []
+$post_final_tasks = []
+$set_catchall_settings = {}
+
+# Forever until something happens to exit..
+# Install core and load all modules
+install_if_missing allmods["core"]
+load_mod_dependencies
+
+while 1 == 1
+  load_mod_actions
+  # Switch the experience for power users
+  if $poweruser
+  		exit
+  else
+    if $subsequent_pass
+      cont
+    end
+    $subsequent_pass = true
+  end
+
+  $menu_select = nil
+  #############################################
+  # Put funky test stuff here:
+  #############################################
+  
+  # If there is a current set - fire it up.
+  load_current_set
+  clear_screen
+  banner_current_set
+  if ARGV[0]
+  	$poweruser = true
+  	$menu_select = ARGV[0].downcase  
+  	ARGV[0] = nil
+  else  	  	
+  	if $current_set
+  		$menu_select = main_menu($global_menu, $set_menu)
+  	else 
+  		$menu_select = main_menu($global_menu)
+  	  puts $menu_select
+    end
+  end
+ 
+end
