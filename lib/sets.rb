@@ -35,6 +35,7 @@ def create_set_dirs dir_path
     chkmk(dir_path)    
     chkmk( dir_path + $raw_file_directory)
     chkmk( dir_path + $final_image_directory )
+    chkmk( dir_path + $discards_directory )
     create_workflow_dirs(dir_path, workflow_dir_count)
     $other_shoot_directories.split(',').each do |dir|
       chkmk( dir_path + dir.strip )

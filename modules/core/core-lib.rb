@@ -40,12 +40,6 @@ def move_jpgs_to_next favor=nil
           discards << discard
         end
       end
-      puts "masters"
-      puts masters
-      puts "discards"
-      puts discards
-      puts "all"
-      puts jpgs
 
     end
     jpgs.each do |jpg|
@@ -55,8 +49,7 @@ def move_jpgs_to_next favor=nil
       else 
         if discards.include?(jpg)
           puts "Rejecting  older version of  :: " + filename(jpg)
-          #OOPS - NEED DISCARD DIRECTORY
-          FileUtils.mv(jpg, $current_set + 'discards/')
+          FileUtils.mv(jpg, $current_set + $discards_directory)
         else
           puts 'Moving only version of       :: ' + filename(jpg)
           FileUtils.mv(jpg, destination)
@@ -69,8 +62,7 @@ def move_jpgs_to_next favor=nil
       (jpgs - discards).each do |jpg|
         $post_final_tasks.each do |task|
           command = task + '("' + destination + jpg.split('/').last + '")'
-          #eval(command)
-          puts command
+          eval(command)
         end
       end
    end

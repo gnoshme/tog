@@ -1,27 +1,27 @@
 # Where are your shoots on your drive.  
 # TOG will not put actual files here.. it will create a directories for every shoot 
 $shoots = Dir.home + '/shoots/'
-$quicklink = Dir.home + '/Desktop/current'
+$quicklink = Dir.home + '/current'
 
 # Do you want TOG to add, e.g. 2020-05-05 to any shoot directory it creates for you
 $add_date_to_shoot_directories = "yes"
 
 # In a shoot directory, where will the FINAL images be kept.  This is a special location
 # as many other modules want to know about your final images.
-$raw_file_directory = 'raws'
-$workflow1_directory = '1-pp'
-$workflow2_directory = '2-gimp'
+$raw_file_directory = 'raw-files'
+$workflow1_directory = 'working-directory'
+$workflow2_directory = ''
 $workflow3_directory = ''
 $workflow4_directory = ''
 $workflow5_directory = ''
-$final_image_directory = '3-finals'
-
+$final_image_directory = 'final-images'
+$discards_directory = 'discards'
 
 def post1
-	move_jpgs_to_next
+	move_jpgs_to_next "favor_files_matching:_rt"
 end
 def post2
-	move_jpgs_to_next
+	move_jpgs_to_next ""
 end
 def post3
 	move_jpgs_to_next
@@ -48,7 +48,7 @@ end
 # Want any other auto-created directories?  Add them here devided by commas.
 # It's ok to create directories and subdirectores,  
 # e.g. "discards, discards/jpgs, discards/other "
-$other_shoot_directories = "discards, proofs"
+$other_shoot_directories = ""
 
 
 ###################################################################################################################33

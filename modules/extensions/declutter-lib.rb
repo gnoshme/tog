@@ -28,7 +28,7 @@ def dodeclutter
  end
 
 # CHECK THE BASICS
-chkmk $archives
+
 
 $set_menu << "declutter|DECLUTTER unwanted files from this set"
 

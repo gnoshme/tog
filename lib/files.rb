@@ -45,6 +45,7 @@ def final_files
 end
 
 def chkmk dir
+  qdebug(dir)
   unless Dir.exists?(dir)
     togprint('line', 'CREATING :: ' + dir)
     FileUtils.mkdir_p(dir)

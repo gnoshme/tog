@@ -103,10 +103,8 @@ def reject_for_filename filename
 end
 
 # CHECK THE BASICS
-chkmk $archives
 
 # HELP ITEMS
-$power_user_help["declutter"] ='Jumps into the declutter dialog'
 
 # DATA ITEMS
 

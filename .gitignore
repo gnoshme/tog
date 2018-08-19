@@ -1,2 +1,4 @@
-settings/*
+modules/custom/*.rb
+settings/*.rb
+!settings/readme.txt
 
