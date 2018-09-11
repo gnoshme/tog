@@ -1,4 +1,4 @@
-Time out.. give me a couple of days if you've found this.  Feel free to have a look but it's not stable enough for alpha yet.  Just getting my ducks in a row.
+Not sure that this is ready for prime time but here you go anyway.
 
 If you are checking it out here's the bottom line.
 
@@ -12,10 +12,13 @@ EXTENSIONS are user installed through the system.. custom still working out.
 
 An extension has 3 files checked into the repo.
 
-
 - MODULE-lib.rb contains some setup and methods
 - MODULE-actions.rb contains the code that executes.
 - MODULE-default-settings.rb user settings setup with default values
 
-In terms of MVC think of:
-tog is the controller  
+Much to do:
+- tidy up default methods so that the installer displays useful stuff after installing a module
+- make install and uninstall work in the menu system
+- make import work outside of the settings for me / linux
+- support multiple non raw image types, e.g. tiff, png.
+
