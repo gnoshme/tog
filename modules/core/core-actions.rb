@@ -14,13 +14,32 @@ end
 
 
 if $menu_select == 'install'
-  installmod ARGV[1]
+  if ARGV[1]
+    installmod ARGV[1]
+  else
+    togprint('h2', "Install Which Module?")
+    menu_choice = menu_from_array( allmods["notinstalled"])
+    mod = allmods["notinstalled"][menu_choice]
+    installmod mod
+  end
+  togprint('p', "Done!")
   exit
 end
 
 
 if $menu_select == 'uninstall'
-  uninstallmod ARGV[1]
+  if ARGV[1]
+    uninstallmod ARGV[1]
+  else
+    togprint('h2', "Uninstall Which Module?")
+    menu_choice = menu_from_array( allmods["installed"])
+    mod = allmods["installed"][menu_choice]
+    togprint('p', "Uninstalling :: " + mod.upcase )
+    are_you_sure
+    uninstallmod mod
+  end
+  togprint('p', "Done!")
+
 end
 
 

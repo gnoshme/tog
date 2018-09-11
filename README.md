@@ -18,7 +18,6 @@ An extension has 3 files checked into the repo.
 
 Much to do:
 - tidy up default methods so that the installer displays useful stuff after installing a module
-- make install and uninstall work in the menu system
 - make import work outside of the settings for me / linux
 - support multiple non raw image types, e.g. tiff, png.
 

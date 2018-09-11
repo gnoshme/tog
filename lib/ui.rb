@@ -122,10 +122,10 @@ def main_menu global_menu, set_menu=nil, prompt="Pick One"
 
   if allmods['notinstalled'].count > 0
     puts " i) Install Modules"
-    menu_actions['i'] = 'installmods'
+    menu_actions['i'] = 'install'
   end
   puts " u) Uninstall Modules"
-  menu_actions['u'] = 'uninstallmods'
+  menu_actions['u'] = 'uninstall'
   puts " x) Exit"
   menu_actions['x'] = 'exit'
 
