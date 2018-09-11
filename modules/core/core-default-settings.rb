@@ -17,11 +17,13 @@ $workflow5_directory = ''
 $final_image_directory = 'final-images'
 $discards_directory = 'discards'
 
+$during_post_actions_overwrite_if_file_already_exists = 'no'
+
 def post1
-	move_jpgs_to_next "favor_files_matching:_rt"
+	move_jpgs_to_next
 end
 def post2
-	move_jpgs_to_next ""
+	move_jpgs_to_next
 end
 def post3
 	move_jpgs_to_next

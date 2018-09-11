@@ -102,7 +102,7 @@ if $menu_select == 'find'
 end
 
 
-if $menu_select == 'pickset'
+if $menu_select == 'switch'
   dirs = Dir.glob( $shoots + '/*').map(&File.method(:realpath)).select {|f| File.directory? f} 
   choice = menu_from_array dirs
   puts dirs[choice]

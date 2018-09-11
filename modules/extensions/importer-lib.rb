@@ -68,13 +68,13 @@ def doimport
 	if matches.count > 0
 		togprint('h2', 'Ready to Import' )
 		togprint('line', 'Matches     :: ' + matches.count.to_s)
-		togprint('line', 'Destination :: ' + $current_set + 'raws/')
+		togprint('line', 'Destination :: ' + $current_set + $raw_file_directory)
 		togprint('line', 'Import mode :: ' + $copy_or_move_files.upcase)
 		are_you_sure 
 		clear_screen
 		matches.each do |file|
 			togprint('line', 'DOING :: ' + $copy_or_move_files.upcase + '  :: ' + filename(file))
-			destination = $current_set + 'raws/' + filename(file) 
+			destination = $current_set + dirslash($raw_file_directory) + filename(file) 
 			if File.exists?(destination)
 				togprint('line', "ALREADY EXISTS :: " + filename(file))
 			else
