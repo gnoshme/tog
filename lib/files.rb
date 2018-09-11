@@ -14,15 +14,15 @@ def choose_files dir, filter="all"
   if filter.nil?
     filter = 'all'
   end
-  jpgs = Dir.glob(dirslash(dir) + '*.jpg')
+  pics = Dir.glob(dirslash(dir) + '*.jpg')
   matching = []
   if filter == 'all' 
-    matching = jpgs
+    matching = pics
   else
     if filter
-      jpgs.each do |jpg|
-        if jpg.include?(filter)
-          matching << jpg
+      pics.each do |pic|
+        if pic.include?(filter)
+          matching << pic
         end
       end
     end

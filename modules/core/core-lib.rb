@@ -16,7 +16,7 @@ def post_mv source, destination
   end
 end
 
-def move_jpgs_to_next favor=""
+def move_pics_to_next favor=""
   if ARGV[0]
     step = ARGV[0].gsub('post','')
   else
@@ -36,50 +36,50 @@ def move_jpgs_to_next favor=""
     destination = dirslash(full_workflow_path(step.to_i + 1))
     final_images = false
   end
-  jpgs = Dir.glob(dirslash(source) + '**/*.jpg')
-  if jpgs.size == 0
+  pics = Dir.glob(dirslash(source) + '**/*.jpg')
+  if pics.size == 0
     togprint('h2', "There are no files to process / move.")
   else
     
     discards = []
     if favor.empty?
-      jpgs.each do |jpg|
-        puts "Moving   :: " + filename(jpg)
-        post_mv(jpg, destination)
-        #FileUtils.mv(jpg, destination)
+      pics.each do |pic|
+        puts "Moving   :: " + filename(pic)
+        post_mv(pic, destination)
+        #FileUtils.mv(pic, destination)
       end
     else
       favor = favor.split(':').last.to_s
       masters = []
 
-      jpgs.each do |jpg|
-        if jpg.include?(favor)
-          masters << jpg
+      pics.each do |pic|
+        if pic.include?(favor)
+          masters << pic
         end
       end
       # This is not optimal!
       masters.each do |master|
         master_filename = filename(master)
-        jpgs.each do |jpg|
-          if jpg.include?(master_filename.gsub(favor,''))
-            discards << jpg
+        pics.each do |pic|
+          if pic.include?(master_filename.gsub(favor,''))
+            discards << pic
           end
         end
       end
     
 
-      jpgs.each do |jpg|
-        if masters.include?(jpg)
-            puts "Accepting Newer Version of   :: " + filename(jpg)
-            post_mv(jpg, destination)
+      pics.each do |pic|
+        if masters.include?(pic)
+            puts "Accepting Newer Version of   :: " + filename(pic)
+            post_mv(pic, destination)
         else 
-          if discards.include?(jpg)
-            puts "Rejecting  older version of  :: " + filename(jpg)
-            FileUtils.mv(jpg, $current_set + $discards_directory)
+          if discards.include?(pic)
+            puts "Rejecting  older version of  :: " + filename(pic)
+            FileUtils.mv(pic, $current_set + $discards_directory)
           else
-            puts 'Moving only version of       :: ' + filename(jpg)
-            #FileUtils.mv(jpg, destination)
-            post_mv(jpg, destination)
+            puts 'Moving only version of       :: ' + filename(pic)
+            #FileUtils.mv(pic, destination)
+            post_mv(pic, destination)
           end
         end
       end
@@ -87,10 +87,10 @@ def move_jpgs_to_next favor=""
     
     if final_images == true
       togprint('h2', 'Performing Auto-Final tasks')
-      (jpgs - discards).each do |jpg|
+      (pics - discards).each do |pic|
       
         $post_final_tasks.each do |task|
-          command = task + '("' + destination + jpg.split('/').last + '")'
+          command = task + '("' + destination + pic.split('/').last + '")'
           eval(command)
         end
       end

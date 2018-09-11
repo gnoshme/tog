@@ -45,39 +45,39 @@ def doexport
 			togprint('ul', set.upcase)
 			dirs.each do |dir|
 				destination_dir = dirslash(set) + dirslash(dir) 
-				jpgs = Dir.glob(destination_dir +'*.jpg').sort
-				if jpgs.count == 0
+				pics = Dir.glob(destination_dir +'*.jpg').sort
+				if pics.count == 0
 					#puts "No Images Found in " + destination_dir
 				else
-					jpgs.each do |jpg|
+					pics.each do |pic|
 						if $try_and_group_set_by_changing_exif == 'yes'
 							unless exifdate
-								exif = MiniExiftool.new(jpg)
+								exif = MiniExiftool.new(pic)
 								exifdate =  exif.CreateDate
 							end 
 						end
-						uname = set.split('/').last + '-' + dir.gsub('/','-') + '-' + jpg.split('/').last
+						uname = set.split('/').last + '-' + dir.gsub('/','-') + '-' + pic.split('/').last
 						destination = (dirslash($export_to) + uname)
 						if File.exist?(destination )
-							puts "already have :: " + filename(jpg)
+							puts "already have :: " + filename(pic)
 						else
-							unless reject_for_filename(filename(jpg)) == true
-								puts "new          :: " + filename(jpg)
+							unless reject_for_filename(filename(pic)) == true
+								puts "new          :: " + filename(pic)
 								if $use_symbolic_links_instead_of_copy == 'yes'
-									FileUtils.ln_s(jpg, destination)
+									FileUtils.ln_s(pic, destination)
 								else
 									if $export_and_resize == 'yes'
-										image = MiniMagick::Image.open(jpg)
+										image = MiniMagick::Image.open(pic)
 		    							image.resize $export_resize_size
-		    							image.format "jpg"
+		    							image.format "pic"
 		    							image.write destination
 		    						else
-										FileUtils.cp(jpg, destination)
+										FileUtils.cp(pic, destination)
 								  	end
 								end
 							  
 								if $try_and_group_set_by_changing_exif == 'yes'
-									pic = MiniExiftool.new(jpg)
+									pic = MiniExiftool.new(pic)
 									pic.ModifyDate = exifdate
 		  						pic.DateTimeOriginal = exifdate
 		  						pic.CreateDate = exifdate
