@@ -6,6 +6,7 @@
 #
 # 1) Install gphoto2 library (see below)
 # 2) Install geeqie image viewer (google how)
+# 3) Support "say".  Open a terminal and type say "hello". If it doesn't work, google it.
 
 
 # GPHOTO2 LIBRARY
@@ -36,6 +37,7 @@ $unmount_before_tether = "yes"
 def unmount_camera
 	if Dir.glob("/run/user/1000/gvfs/*").size > 0
 		puts "Unmounting Camera"
+		puts
 		system("gvfs-mount -u /run/user/1000/gvfs/*")
 	end
 end
@@ -57,7 +59,12 @@ end
 
 # This is a nice little feature.. tog will beep at you if your camera connection is lost.
 # This is correct for linux 
-$beep_on_disconnect = "yes"
-def system_beep
-	system("speaker-test -t sine -f 1000 & pid=$! ; sleep 0.5s ; kill -9 $pid")
+$make_sound_on_disconnect = "yes"
+def disconnect_sound
+	system( 'say "Beeeeeeeep awawaaaaaa - Camera Disconnected. Fix it! "')
+	#system("speaker-test -t sine -f 1000 & pid=$! ; sleep 0.5s ; kill -9 $pid")
 end
+
+# Create an audible notification ever X photos to help keep track.
+$vocalize_every_x_pictures = "yes"
+$vocalize_every = 100

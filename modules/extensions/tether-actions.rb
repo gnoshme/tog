@@ -1,10 +1,7 @@
-require 'gphoto2'
 
 if $menu_select == 'tether'
 	hook_path = togpath('!tog/modules/extensions/tether-hookscript.rb')
 	Dir.chdir($current_set + $raw_file_directory)
-
-
 
 	if File.exists?($tether_set_info_file)
 		tether_state = File.read($tether_set_info_file)
@@ -27,14 +24,6 @@ if $menu_select == 'tether'
 		File.open($tether_set_info_file, 'w') { |file| file.write(prefix + '|1') }
 	end
 
-	#tether_state = File.read($tether_set_info_file)
-	#counter = tether_state.split('|').last
-	#prefix = tether_state.split('|').first
-	#if prefix.nil?
-#		prefix = ""
-	#end
-
-
   cameras = GPhoto2::Camera.all
 
   if cameras.size > 0
@@ -51,8 +40,8 @@ if $menu_select == 'tether'
   	end
 		#system('gphoto2 --capture-tethered --hook-script=' + hook_path + ' | grep -v UNKNOWN')
 		system('gphoto2 --capture-tethered --hook-script=' + hook_path )
-		if $beep_on_disconnect == 'yes'
-			system_beep
+		if $make_sound_on_disconnect == 'yes'
+			disconnect_sound
 		end
   else
   	togprint('warning', "Could not find camera")

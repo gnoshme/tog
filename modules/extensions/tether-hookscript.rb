@@ -53,6 +53,13 @@ load ($togpath + '/settings/tether.rb')
 	 	puts "Updating preview"
 
 		puts
+
+		if $vocalize_every_x_pictures == 'yes'
+			if ( counter.to_i / $vocalize_every ) == (counter.to_f / $vocalize_every)
+				command = 'say "That is picture number ' + counter.to_s + '"'
+				system(command) 
+			end
+		end
 		counter = counter.to_i + 1
 		File.open($tether_set_info_file, 'w') { |file| file.write(prefix + '|' + counter.to_s) }
 		unless true_if_image_viewer_is_already_running == true
