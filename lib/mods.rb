@@ -56,31 +56,36 @@ end
  
 def installmod mod 
   destination = pathify('settings/', mod)
-  modtype = allmods.find { |key, values| values.include?(mod) }.first
-  source = pathify(dirslash('modules/' + modtype), mod, '-default-settings')
-  if File.exists?(source)
-    if File.exists?(destination)
-      togprint('h2',"Wait.. that's already installed")
-    else
-      togprint('h2',"Installing Extension :: " + mod)
+  if allmods["notinstalled"].include?(mod)
+    modtype = allmods.find { |key, values| values.include?(mod) }.first
+    source = pathify(dirslash('modules/' + modtype), mod, '-default-settings')
+    if File.exists?(source)
+      if File.exists?(destination)
+        togprint('h2',"Wait.. that's already installed")
+      else
+        togprint('h2',"Installing Extension :: " + mod)
 
-      FileUtils.cp(source, destination)
-      load_mod mod
-      command = mod + '_help'
-      eval(command) 
-      exit
+        FileUtils.cp(source, destination)
+        load_mod mod
+        help_head mod
+        command = mod + '_help'
+        eval(command) 
+        exit
+      end
+    else 
+      togprint('h2','The settings file is missing for that module.')
     end
-  else 
-    togprint('h2','The settings file is missing for that module.')
+  else
+    togprint('h2', "Can't seem to find that module!")
   end
 end
 
 
 def uninstallmod mod
-  mod = pathify('settings/', mod)
-  if File.exists?(mod)
-    togprint('h2',"Installing Extension :: " + mod)
-    FileUtils.mv(mod, '/tmp')
+  settings = pathify('settings/', mod)
+  if File.exists?(settings)
+    togprint('h2',"Removing Extension :: " + mod)
+    FileUtils.mv(settings, '/tmp')
     allmods force=true
   else
     togprint('h2',"Can't uninstall a module that's not installed")

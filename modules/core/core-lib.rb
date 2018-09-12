@@ -151,13 +151,13 @@ workflow_dir_count.times do |counter|
 	$set_menu << "post" + real_count.to_s + '|Post Workflow Step ' + real_count.to_s + ' tasks. - POST' + real_count.to_s
 end
 
-$global_menu << "new|Create a NEW set"
+$global_menu << "create|CREATE a new set"
 $global_menu << "find|FIND a set"
 $global_menu << "switch|SWITCH to another set in shoots"
 
 # HELP ITEMS
-$power_user_help["new"] ='Launches the creating a new set dialog'
-$power_user_help["new [SHOOT_CODE]"] ='Creates a new set using SHOOT_CODE in the directory name'
+$power_user_help["create"] ='Launches the creating a new set dialog'
+$power_user_help["create [SHOOT_CODE]"] ='Creates a new set using SHOOT_CODE in the directory name'
 $power_user_help["post1, post2, post3 etc.."] = 'Do workflow cleanup steps for a specific workflow step'
 # DATA ITEMS
 $set_roots << $shoots + '|*'

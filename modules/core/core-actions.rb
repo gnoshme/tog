@@ -85,7 +85,7 @@ if $menu_select == "view"
 end
 
 
-if $menu_select == "new"
+if $menu_select == "create" || $menu_select == "new"
   togprint('line',"Creating a new set")
   if $add_date_to_shoot_directories == 'yes'
   end
