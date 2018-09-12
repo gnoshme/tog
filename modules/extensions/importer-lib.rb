@@ -6,7 +6,7 @@ require 'etc'
 
 # REQUIRED METHODS
 def importer_help
-  puts "bla bla bla"
+	togprint('p', "Somewhat experimental as I have no idea if this works outside of Ubuntu Linux.  If you look at the settings you'll see file system locations that Ubuntu mounts cameras and cards.  Modifying these to match your OS should make things 'just work' but tread carefully.")
 end
 
 $set_menu << "import|IMPORT from Camera or SD Card"

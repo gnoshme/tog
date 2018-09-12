@@ -3,14 +3,10 @@ check_gem_installed('mini_magick')
 require 'mini_magick'
 
 def instagrammer_help
-  togprint('h1', "Instagrammer")
   togprint('p', 'The Instagrammer extension allows you to easily (and even automatically) create IG friendly versions of your final images. ')
   togprint('p', 'The result is an image that has been intelligently stretched to a square using the images overall brightness and content to add the necessary border top or bottom.')
-  togprint('ul', 'Available Settings')
-  togprint('line', 'Autocreate when moving images to the Final Image Directory - Default YES')
-	togprint('line', 'Image Size - Default 2000x2000')
-	togprint('line', 'Skip if already exists - Default YES')
-	togprint('line', 'Add file suffix - Default IG-')
+  togprint('p', "If you are using tog workflows, you can also have tog auto generate IG files when you do the last POST step in your workflow.")
+  togprint('p', "Poweruser Bonus :: Run 'tog ighere' in ANY directory on your file system and tog will create IG versions of any images found there.")
 end
 
 $set_menu << "ig|Create Instagram (IG) Friendly Versions"

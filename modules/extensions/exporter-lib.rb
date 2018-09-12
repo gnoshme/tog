@@ -9,10 +9,12 @@ $global_menu << 'export|EXPORT to maintained image repo'
 if $try_and_group_set_by_changing_exif == 'yes'
 	require 'mini_exiftool'
 end
-# REQUIRED METHODS
+
 def exporter_help
-  puts "bla bla bla"
+  togprint('p', "The exporter exports final images from all of your sets to a folder of your choice. This is really useful if you like to use a photo app to view all of your finished work.")
+  togprint('p', "Exporter creates a unique and meaningful filename for every image, and doesn't create duplicates between current and archived sets. It also auto-resizes final images so your exported image repo is more manageable.")
 end
+
 def set_exif string, file
   blurt(2, "EXIF:: " + string + " || " + file )
   exif = MiniExiftool.new(file)

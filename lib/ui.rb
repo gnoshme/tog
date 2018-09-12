@@ -86,6 +86,16 @@ def yes_no prompt
   return choice.chomp.downcase
 end
 
+def help_head mod, heading=nil
+  unless heading.nil?
+    blurb = heading
+  else
+    blurb = mod.upcase
+  end
+  togprint('h2', blurb)
+  togprint('line', "Customize by editing the file: settings/" + mod + '.rb')
+  puts
+end
 
 
 def cont prompt="Press ENTER to continue.."
@@ -119,6 +129,8 @@ def main_menu global_menu, set_menu=nil, prompt="Pick One"
   puts "Misc"
   puts " p) Show tog poweruser help"
   menu_actions['p'] = 'power_user_help'
+  puts " h) Show detailed help"
+  menu_actions['h'] = 'help'
 
   if allmods['notinstalled'].count > 0
     puts " i) Install Modules"

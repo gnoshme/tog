@@ -3,9 +3,11 @@ check_gem_installed('mini_magick')
 require 'mini_magick'
 
 def resizer_help
-  togprint('h1', "Resizer")
-  togprint('p', 'blablabla')
+  togprint('p', 'The resizer extension allows you to easily (and even automatically) create resized versions of your final images. ')
+  togprint('p', "If you are using tog workflows, you can also have tog auto generate a resized file when you do the last POST step in your workflow.")
+  togprint('p', "Poweruser Bonus :: Run 'tog resizehere' in ANY directory on your file system and tog will create resized versions of any images found there.")
 end
+
 
 $set_menu << "resize|RESIZE Images"
 if $autocreate_resized_when_moving_to_finals == 'yes'

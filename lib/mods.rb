@@ -64,7 +64,6 @@ def installmod mod
     else
       togprint('h2',"Installing Extension :: " + mod)
 
-
       FileUtils.cp(source, destination)
       load_mod mod
       command = mod + '_help'
@@ -80,6 +79,7 @@ end
 def uninstallmod mod
   mod = pathify('settings/', mod)
   if File.exists?(mod)
+    togprint('h2',"Installing Extension :: " + mod)
     FileUtils.mv(mod, '/tmp')
     allmods force=true
   else

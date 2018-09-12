@@ -5,13 +5,44 @@ if $menu_select == "power_user_help"
   togprint('h1', 'Power User Help')
   togprint('p', "You can do most things with TOG without using the menu at all with these power user commands.  All you have to do is type tog [command]")
 
-  $power_user_help.each do |help|
+  $power_user_help.sort.each do |help|
     puts help[0]
     togprint('p', help[1])
 
   end
 end
 
+if $menu_select == "help"
+
+  allmods["core"].each do |mod|
+    help_head mod
+    command = mod + '_help'
+    eval(command)
+    puts
+    puts
+  end
+  allmods["extensions"].sort.each do |mod|
+    if allmods["installed"].include?(mod)
+      help_head mod
+      command = mod + '_help'
+      eval(command)
+      puts
+      puts
+    end
+
+  end
+  allmods["custom"].sort.each do |mod|
+    if allmods["installed"].include?(mod)
+      help_head mod
+      command = mod + '_help'
+      eval(command)
+      puts
+      puts
+    end
+  end
+
+
+end
 
 if $menu_select == 'install'
   if ARGV[1]
@@ -20,7 +51,7 @@ if $menu_select == 'install'
     togprint('h2', "Install Which Module?")
     menu_choice = menu_from_array( allmods["notinstalled"])
     mod = allmods["notinstalled"][menu_choice]
-    installmod mod
+     installmod mod
   end
   togprint('p', "Done!")
   exit

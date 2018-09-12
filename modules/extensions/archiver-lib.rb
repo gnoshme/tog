@@ -1,7 +1,8 @@
 
 # REQUIRED METHODS
 def archiver_help
-  puts "The Archiver lets you move old sets and organize them into folders.  Before using it you need to create some folders in " + $archives + " that you'll be moving sets to."
+  togprint('p', "The Archiver lets you move old sets and organize them into folders.  Before using it you need to create some folders in " + $archives + " that you'll be moving sets to.  After that it 'just works'")
+  togprint('p', "To change the location of the archive directory,  edit the settings file settings/archiver.rb.")
 end
 
 # CHECK THE BASICS

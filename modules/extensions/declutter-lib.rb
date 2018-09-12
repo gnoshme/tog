@@ -1,7 +1,8 @@
 
 # REQUIRED METHODS
 def declutter_help
-  puts "bla bla bla"
+  togprint('p', "The declutter module allows you to delete specific groups of files in your current set on demand.  This is a smart thing to do before archiving, for example, removing any files that have been auto-created, e.g. the Instagram and Resized files.  You can specify other directories to delete, e.g. you might want to clear out PROOF images before archiving to save space.")
+  togprint('p', "By default,  the archiver asks if you want to declutter before archiving")
 end
 
 def dodeclutter

@@ -1,7 +1,8 @@
 
 # REQUIRED METHODS
 def core_help
-  puts "this is the install core info"
+  togprint('p', "tog automatically installs a module called CORE which contains the very core features of the system, like extension managment, creating sets, finding and switching sets etc.")
+  togprint('p', "The core settings are important, as they include where on your file system you keep your shoots, and your workflow process steps.")
 end
 
 def post_mv source, destination
