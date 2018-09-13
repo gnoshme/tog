@@ -27,6 +27,9 @@ if $menu_select == 'tether'
   cameras = GPhoto2::Camera.all
 
   if cameras.size > 0
+  	if $unmount_before_tether == 'yes'
+  		unmount_camera
+  	end
   	togprint('line', "Camera     :: " + cameras.first.model)
   	togprint('line', "Port       :: " + cameras.first.port)
   	togprint('line', "Prefix     :: " + prefix )
@@ -34,10 +37,18 @@ if $menu_select == 'tether'
   	togprint('line', "Counter at :: " + counter)
   	end
   	puts
-
-  	if $unmount_before_tether == 'yes'
-  		unmount_camera
+  	camera = cameras.first
+  	if $warn_if_iso_more_than > 0 && camera['iso'].value.to_i > $warn_if_iso_more_than
+  		togprint('error', 'ISO HIGH :: SET TO ' + camera['iso'].value.to_s)
   	end
+  	if $warn_if_not_shooting_raw == 'yes' && ! camera['imagequality'].value.downcase.include?('raw')
+  		togprint('error', 'NOT SHOOTING RAW')
+  	end
+  	if $warn_if_whitebalance_not_flash == 'yes' && ! camera['whitebalance'].value.downcase.include?('flash')
+  		togprint('error', 'WHITE BALANCE IS ' + camera['whitebalance'].value.upcase )
+  	end
+
+  	camera.close
 		#system('gphoto2 --capture-tethered --hook-script=' + hook_path + ' | grep -v UNKNOWN')
 		system('gphoto2 --capture-tethered --hook-script=' + hook_path )
 		if $make_sound_on_disconnect == 'yes'

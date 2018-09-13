@@ -27,7 +27,7 @@ def togprint style, contents
     when 'error'
       header = nil
       footer = nil
-      contents = '','','!-:::::    ' + contents + '    :::::-!','',''
+      contents = '','!-:::::    ' + contents + '    :::::-!',''
  
     when 'p'
       header = nil
