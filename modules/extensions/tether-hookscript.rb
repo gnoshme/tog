@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 require 'fileutils'
-
+#
 # This makes no sense.. resolves as /modules/ not /modules/extensions.. Hum.
 $togpath = File.expand_path(File.dirname(File.dirname(__FILE__))) + '/../'
 
@@ -49,6 +49,10 @@ load ($togpath + '/settings/tether.rb')
 	 			puts "Rename file as " + new_file
 	 		end
 	 	end
+		unless $start.nil?
+		  puts "Time: " + (Time.now - $start).to_s
+		end  
+		$start = Time.now
 		FileUtils.cp(new_file, 'preview.NEF')
 	 	puts "Updating preview"
 

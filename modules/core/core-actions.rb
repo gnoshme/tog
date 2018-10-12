@@ -140,6 +140,7 @@ if $menu_select == 'find'
       set_choice = matches[0]
     else
       menu_array = []
+      matches = matches.sort.reverse
       matches.each do |dir|
         menu_array  <<  dir.split('/').last 
       end   
