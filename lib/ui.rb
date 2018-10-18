@@ -80,6 +80,12 @@ def are_you_sure prompt="Are you sure?"
   system('clear')
 end
 
+def get_input prompt
+  puts prompt
+  choice = $stdin.gets
+  return choice.chomp
+end
+
 def yes_no prompt
   puts prompt + "  y/n"
   choice = $stdin.gets

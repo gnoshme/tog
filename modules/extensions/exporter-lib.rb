@@ -68,14 +68,26 @@ def doexport
 								if $use_symbolic_links_instead_of_copy == 'yes'
 									FileUtils.ln_s(pic, destination)
 								else
-									if $export_and_resize == 'yes'
-										image = MiniMagick::Image.open(pic)
+									resized_available = false
+									if $use_resizer_images_if_available == "yes"
+										resized_pic = pic.gsub($final_image_directory, $resized_image_directory = 'resized')
+										if File.exist?(resized_pic)
+											puts "using resized :: " + filename(pic)
+											FileUtils.cp(resized_pic, destination)
+											resized_available = true
+										end
+									end
+									unless resized_available
+										asdf
+										if $export_and_resize == 'yes'
+											image = MiniMagick::Image.open(pic)
 		    							image.resize $export_resize_size
 		    							image.format "pic"
 		    							image.write destination
 		    						else
-										FileUtils.cp(pic, destination)
+											FileUtils.cp(pic, destination)
 								  	end
+									end
 								end
 							  
 								if $try_and_group_set_by_changing_exif == 'yes'
