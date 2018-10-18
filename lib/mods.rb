@@ -28,7 +28,7 @@ def allmods force=false
         end
       end
     end
-    allmods["notinstalled"] = allmods["extensions"] + allmods["custom"] - allmods["installed"]
+    allmods["notinstalled"] = allmods["core"] + allmods["extensions"] + allmods["custom"] - allmods["installed"]
     $allmods = allmods
     return allmods
   end
@@ -54,9 +54,10 @@ def is_installed mod
 end
 
  
-def installmod mod 
+def installmod mod
   destination = pathify('settings/', mod)
   if allmods["notinstalled"].include?(mod)
+
     modtype = allmods.find { |key, values| values.include?(mod) }.first
     source = pathify(dirslash('modules/' + modtype), mod, '-default-settings')
     if File.exists?(source)
