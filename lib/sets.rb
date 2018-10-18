@@ -58,19 +58,21 @@ def clear_current_set
 end
 
 def load_current_set display="no"
-  if File.exists?($current_set_file)
-    current_set =  File.read($current_set_file)
-    if ! Dir.exists?(current_set)
-      return false
-    else
-      $current_set = current_set
-      if display == "yes"
-        banner_current_set
+  if $current_set_file
+    if File.exists?($current_set_file)
+      current_set =  File.read($current_set_file)
+      if ! Dir.exists?(current_set)
+        return false
+      else
+        $current_set = current_set
+        if display == "yes"
+          banner_current_set
+        end
+        check_set
+        return current_set
       end
-      check_set
-      return current_set
-    end
-   end
+     end
+  end
 end
 
 def banner_current_set
