@@ -4,7 +4,7 @@ require 'pathname'
 
 $togpath = File.dirname(Pathname.new(__FILE__).realpath)
 $debuglevel = 0
-if File.exists?($togpath + '/debuglevel.rb')
+if File.exists?($togpath + '/debuglevel.rb') 
   load($togpath + '/debuglevel.rb')
 end
 
@@ -20,6 +20,7 @@ load ($togpath + '/lib/sets.rb')
 
 if File.exists?(togpath("!tog/runningtests"))
   $settings_path = 'testsettings/'
+  $debuglevel = 5
 else
   $settings_path = 'settings/'
 end

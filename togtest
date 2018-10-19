@@ -33,7 +33,6 @@ $post_final_tasks = []
 $set_catchall_settings = {}
 
 
-
 #Make sure tog loads core modules
 system("./tog skipthrough")
 if ! is_installed('core')
@@ -44,6 +43,12 @@ end
 system("./tog install archiver")
 if ! is_installed('archiver')
 	exittests("tog install archiver :: Archiver didn't install")
+end
+
+#UnInstall a module through tog install
+system("./tog uninstall archiver")
+if is_installed('archiver')
+	exittests("tog uninstall archiver :: Archiver didn't uninstall")
 end
 
 #Now we can install all modules through the code
@@ -73,9 +78,21 @@ test_exists "file", $current_set + 'resized/tog.jpg'
 test_exists "file", $current_set + 'instagramed/IG-tog.jpg'
 
 
+#Run some more modules that are testable
+system("tog declutter")
+test_notexists "file", $current_set + 'resized/tog.jpg'
+test_notexists "file", $current_set + 'instagramed/IG-tog.jpg'
+
+
 
 #Cleanup
+puts "Cleaning up from tests"
 system("rm runningtests")
 system("rm -r testsettings")
 system("rm -r ~/shoots/*togtests")
 system("rm ~/.tog.txt")
+
+puts "=================================================================================="
+puts "=================================================================================="
+puts "=================================================================================="
+puts "If you got here.. things look good"

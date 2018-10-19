@@ -25,3 +25,11 @@ def test_exists type, location
 	end
 end
 
+def test_notexists type, location
+	case type
+	when "file"
+		if File.exists?(location)
+			exittests "FILE SHOULD NOT BE HERE :: " + location
+		end
+	end
+end
