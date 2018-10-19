@@ -1,6 +1,10 @@
 # CORE MODULE ACTIONS
 debug(5, "Core Actions: Top")
 
+if $menu_select == 'skipthrough'
+  # This is so that tests can run as poweruser
+end
+
 if $menu_select == "power_user_help"
   togprint('h1', 'Power User Help')
   togprint('p', "You can do most things with TOG without using the menu at all with these power user commands.  All you have to do is type tog [command]")

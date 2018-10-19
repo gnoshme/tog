@@ -1,4 +1,3 @@
-
 # REQUIRED METHODS
 def archiver_help
   togprint('p', "The Archiver lets you move old sets and organize them into folders.  Before using it you need to create some folders in " + $archives + " that you'll be moving sets to.  After that it 'just works'")

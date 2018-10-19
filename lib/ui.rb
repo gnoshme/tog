@@ -50,6 +50,9 @@ end
 
 def clear_screen
     if $debuglevel > 0
+    puts
+    puts
+    puts
     debug(3, "CLEARSCREEN")
   else
     system('clear')

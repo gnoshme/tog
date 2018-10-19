@@ -72,6 +72,9 @@ def load_current_set display="no"
         return current_set
       end
      end
+     return true
+  else
+    return false
   end
 end
 

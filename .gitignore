@@ -2,3 +2,4 @@ modules/custom/*.rb
 settings/*.rb
 !settings/readme.txt
 reset
+debuglevel.rb

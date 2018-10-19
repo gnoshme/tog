@@ -4,6 +4,10 @@ require 'pathname'
 
 $togpath = File.dirname(Pathname.new(__FILE__).realpath)
 $debuglevel = 0
+if File.exists?($togpath + '/debuglevel.rb')
+  load($togpath + '/debuglevel.rb')
+end
+
 if $debuglevel > 0
   require 'pry'
 end
@@ -14,6 +18,11 @@ load ($togpath + '/lib/files.rb')
 load ($togpath + '/lib/mods.rb')
 load ($togpath + '/lib/sets.rb')
 
+if File.exists?(togpath("!tog/runningtests"))
+  $settings_path = 'testsettings/'
+else
+  $settings_path = 'settings/'
+end
 
 # Setup global vars
 $global_menu = []
@@ -23,8 +32,6 @@ $set_roots = []
 $post_final_tasks = []
 $set_catchall_settings = {}
 
-# Forever until something happens to exit..
-# Install core and load all modules
 install_if_missing allmods["core"]
 load_mod_dependencies
 
@@ -41,9 +48,6 @@ while 1 == 1
   end
 
   $menu_select = nil
-  #############################################
-  # Put funky test stuff here:
-  #############################################
   
   # If there is a current set - fire it up.
   load_current_set
