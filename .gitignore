@@ -3,3 +3,5 @@ settings/*.rb
 !settings/readme.txt
 reset
 debuglevel.rb
+testsettings/
+runningtests

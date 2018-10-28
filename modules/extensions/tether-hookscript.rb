@@ -34,28 +34,31 @@ load ($togpath + '/settings/tether.rb')
  		end
 
  		file_extension = ENV['ARGUMENT'].split('.').last
- 		if $use_camera_filename_or_counter == "counter"			 			
- 			new_file = prefix + counter.rjust(4,'0') + '.' + file_extension
- 		else
- 			new_file = prefix + ENV['ARGUMENT']
- 		end
- 		if new_file == ENV['ARGUMENT']
- 			# Nothing to do here
- 		else
-	 		if File.exists?(new_file)
-	 			puts "WARNING :: FILENAME EXISTS :: Not renaming file"
+ 		if file_extension == "NEF"
+	 		if $use_camera_filename_or_counter == "counter"			 			
+	 			new_file = prefix + counter.rjust(4,'0') + '.' + file_extension
 	 		else
-	 			FileUtils.mv(ENV['ARGUMENT'], new_file )
-	 			puts "Rename file as " + new_file
+	 			new_file = prefix + ENV['ARGUMENT']
 	 		end
+	 		if new_file == ENV['ARGUMENT']
+	 			# Nothing to do here
+	 		else
+		 		if File.exists?(new_file)
+		 			puts "WARNING :: FILENAME EXISTS :: Not renaming file"
+		 		else
+		 			FileUtils.mv(ENV['ARGUMENT'], new_file )
+		 			puts "Rename file as " + new_file
+		 		end
+		 	end
+			unless $start.nil?
+			  puts "Time: " + (Time.now - $start).to_s
+			end  
+			$start = Time.now
+		end
+		if file_extension == "JPG"
+			FileUtils.cp(ENV['ARGUMENT'], 'preview.jpg')
+	 		puts "Updating preview"
 	 	end
-		unless $start.nil?
-		  puts "Time: " + (Time.now - $start).to_s
-		end  
-		$start = Time.now
-		FileUtils.cp(new_file, 'preview.NEF')
-	 	puts "Updating preview"
-
 		puts
 
 		if $vocalize_every_x_pictures == 'yes'

@@ -79,6 +79,7 @@ def doexport
 									end
 									unless resized_available
 										if $export_and_resize == 'yes'
+											puts "resizing     :: " + filename(pic)
 											image = MiniMagick::Image.open(pic)
 		    							image.resize $export_resize_size
 		    							image.format "pic"
