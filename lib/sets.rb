@@ -2,7 +2,7 @@ def save_current_set path, display="no"
   File.open($current_set_file, 'w') { |file| file.write(dirslash(path)) }
   $current_set = path
   ln_current_set
-  if display == "yes"
+  unless display == "no"
     banner_current_set
   end
 end

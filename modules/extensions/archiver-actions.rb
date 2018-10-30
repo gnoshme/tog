@@ -34,6 +34,6 @@ if $menu_select == 'archive'
 	    togprint('line', 'Started..')
 	    FileUtils.mv($current_set.chomp, destination_dir, :verbose => true)
 	    togprint('line', 'Finished!')
-	    clear_current_set	    
+	    save_current_set(destination_dir, "yes")  
 	  end
 end
