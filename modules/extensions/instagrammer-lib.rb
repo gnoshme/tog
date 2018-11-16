@@ -1,4 +1,5 @@
 check_gem_installed('mini_magick')
+check_gem_installed('vmstat')
 
 require 'mini_magick'
 
@@ -14,12 +15,22 @@ if $autocreate_instagram_when_moving_to_finals == 'yes'
 	$post_final_tasks << 'igify'
 end
 
-def igify original, dir=dirslash($current_set + $instagram_image_directory)
+def igprocess pics, threads
+  pids = Dir.glob('/tmp/togigpid*')
+  pids.each do |pid|
+    File.delete(pid)
+  end
+  pics.sort.each do |pic|
+    igify pic
+  end
+end
 
+def ig_pid_count
+  return Dir.glob('/tmp/togigpid-*').count
+end
 
-	computed_size = $instagram_image_size.to_s + 'x' + $instagram_image_size.to_s
-	computed_oversized = ($instagram_image_size * 1.3).to_s + 'x' + ($instagram_image_size * 1.3).to_s  + '!'
-	computed_crop = computed_size + '+' + ($instagram_image_size * 0.15 ).to_i.to_s + '+' + ($instagram_image_size * 0.15 ).to_i.to_s
+def igify original, dir=dirslash($current_set + $instagram_image_directory), threads=$instagram_threads
+
 
 	if Dir.exists?(dir) == false  
 		FileUtils.mkdir_p(dir)
@@ -28,39 +39,73 @@ def igify original, dir=dirslash($current_set + $instagram_image_directory)
   destination = dir + $instagram_suffix + "#{original.split('/').last}"
   
   if File.exists?(destination) && $instagram_skip_if_exists == 'yes'
+    puts ""
     puts "IG     :: Skipping (Exists) :: " + filename(original)
   else
-    puts "IG     :: " + filename(original)
-
-    image = MiniMagick::Image.open(original)    
-    image.resize computed_size
-    image.write "/tmp/foreground.jpg"
-    testimage = MiniMagick::Image.open('/tmp/foreground.jpg')
-    testimage.colorspace "Gray"
-    brightness = testimage["%[mean]"]
-    
-    if brightness.to_i > 32768
-      shade = "white"
+    if ig_pid_count <= threads
+      pid = "/tmp/togigpid-" + filename(original) 
+      FileUtils.touch(pid)
+      command = togpath("!tog/tog igthis " + original + " " +  destination + " quietmode &")
+      system(command)
     else
-      shade = "black"
+      #puts "Waiting           :: (" + ig_pid_count.to_s + '/' + threads.to_s + ')'                     
+      loop do
+        #print "."
+        $stdout.flush
+        if ig_pid_count <= threads
+          pid = "/tmp/togigpid-" + filename(original) 
+          FileUtils.touch(pid)
+          command = togpath("!tog/tog igthis " + original + " " +  destination + " quietmode &")
+          system(command)
+          break
+        end
+      end
     end
-
-    image.combine_options do |b|
-      b.resize computed_oversized
-      b.blur "0x60"
-      b.fill shade
-      b.colorize "40%"
-      b.crop computed_crop
-
-    end
-    image.write "/tmp/background.jpg"
-
-    first_image  = MiniMagick::Image.new("/tmp/background.jpg")
-    second_image = MiniMagick::Image.new("/tmp/foreground.jpg")
-    result = first_image.composite(second_image) do |c|
-      c.compose "Over"    # OverCompositeOp
-      c.gravity "center" # copy second_image onto first_image from (20, 20)
-    end
-    result.write destination
   end
+end
+
+def igactual original, destination
+  puts "IG     :: " + filename(original)
+  pid = "/tmp/togigpid-" + filename(original) 
+
+  computed_size = $instagram_image_size.to_s + 'x' + $instagram_image_size.to_s
+  computed_oversized = ($instagram_image_size * 1.3).to_s + 'x' + ($instagram_image_size * 1.3).to_s  + '!'
+  computed_crop = computed_size + '+' + ($instagram_image_size * 0.15 ).to_i.to_s + '+' + ($instagram_image_size * 0.15 ).to_i.to_s
+
+
+  image = MiniMagick::Image.open(original)    
+  image.resize computed_size
+  tmpforeground = "/tmp/togig-foreground" + filename(original)
+  image.write tmpforeground
+  testimage = MiniMagick::Image.open(tmpforeground)
+  testimage.colorspace "Gray"
+  brightness = testimage["%[mean]"]
+  
+  if brightness.to_i > 32768
+    shade = "white"
+  else
+    shade = "black"
+  end
+  image.combine_options do |b|
+    b.resize computed_oversized
+    b.blur "0x60"
+    b.fill shade
+    b.colorize "40%"
+    b.crop computed_crop
+
+  end
+  tmpbackground = "/tmp/togig-background-" + filename(original)
+
+  image.write tmpbackground
+
+  first_image  = MiniMagick::Image.new(tmpbackground)
+  second_image = MiniMagick::Image.new(tmpforeground)
+  result = first_image.composite(second_image) do |c|
+    c.compose "Over"    # OverCompositeOp
+    c.gravity "center" # copy second_image onto first_image from (20, 20)
+  end
+  File.delete(tmpforeground)
+  File.delete(tmpbackground)
+  File.delete(pid)
+  result.write destination
 end

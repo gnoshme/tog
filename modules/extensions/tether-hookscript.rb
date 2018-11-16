@@ -56,7 +56,9 @@ load ($togpath + '/settings/tether.rb')
 			$start = Time.now
 		end
 		if file_extension == "JPG"
-			FileUtils.cp(ENV['ARGUMENT'], 'preview.jpg')
+			destination = "../" + $tether_preview_image_directory + "/" 
+			FileUtils.cp(ENV['ARGUMENT'], destination)
+			FileUtils.mv(ENV['ARGUMENT'], destination + 'preview.jpg')
 	 		puts "Updating preview"
 	 	end
 		puts
@@ -70,6 +72,7 @@ load ($togpath + '/settings/tether.rb')
 		counter = counter.to_i + 1
 		File.open($tether_set_info_file, 'w') { |file| file.write(prefix + '|' + counter.to_s) }
 		unless true_if_image_viewer_is_already_running == true
-			system($command_to_launch_image_viewer + ' preview.NEF &')
+			Dir.chdir('../' + $tether_preview_image_directory)
+			system($command_to_launch_image_viewer + ' preview.jpg &')
 		end
  end

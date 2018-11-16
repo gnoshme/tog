@@ -1,6 +1,8 @@
 
 if $menu_select == 'tether'
 	hook_path = togpath('!tog/modules/extensions/tether-hookscript.rb')
+	$preview_directory = dirslash($current_set + $tether_preview_image_directory)
+	chkmk $preview_directory
 	Dir.chdir($current_set + $raw_file_directory)
 
 	if File.exists?($tether_set_info_file)
@@ -14,11 +16,12 @@ if $menu_select == 'tether'
 		if ARGV[1]
 			prefix = ARGV[1]
 		else
-			puts "Prefix to filenames? (Optional - Hit enter to skip)"
+			puts "Prefix to filenames?"
 			prefix = $stdin.gets.chomp	
 		end
-		if prefix.nil?
-			prefix = ""
+		if prefix.nil? || prefix == ""
+			puts "Prefix required"
+			exit
 		end
 		counter = "1"
 		File.open($tether_set_info_file, 'w') { |file| file.write(prefix + '|1') }
@@ -48,11 +51,14 @@ if $menu_select == 'tether'
   		togprint('error', 'WHITE BALANCE IS ' + camera['whitebalance'].value.upcase )
   	end
 
-  	camera.close
-		#system('gphoto2 --capture-tethered --hook-script=' + hook_path + ' | grep -v UNKNOWN')
-		system('gphoto2 --capture-tethered --hook-script=' + hook_path )
-		if $make_sound_on_disconnect == 'yes'
-			disconnect_sound
+  	loop do
+	  	camera.close
+
+			system('gphoto2 --capture-tethered --hook-script=' + hook_path )
+			if $make_sound_on_disconnect == 'yes'
+				disconnect_sound
+				sleep 5
+			end
 		end
   else
   	togprint('warning', "Could not find camera")

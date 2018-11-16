@@ -109,7 +109,6 @@ end
 
 def load_mod_dependencies
   load_mod_settings
-
   # Now load all mod libs
   load_mods "core", "-lib"
   load_mods "extensions", "-lib"

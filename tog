@@ -52,8 +52,10 @@ while 1 == 1
   
   # If there is a current set - fire it up.
   load_current_set
-  clear_screen
-  banner_current_set
+  unless ARGV[3] == 'quietmode'
+    clear_screen
+    banner_current_set
+  end
   if ARGV[0]
   	$poweruser = true
   	$menu_select = ARGV[0].downcase  

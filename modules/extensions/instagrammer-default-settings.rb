@@ -1,5 +1,5 @@
 # What size of square should the end result be?
-$instagram_image_size=2000
+$instagram_image_size=1080
 
 # Where should the go?  By default this is relative to the current set, but you could put all IG images 
 # from all sets to somewhere specific,  by doing something like:
@@ -16,3 +16,4 @@ $autocreate_instagram_when_moving_to_finals = "yes"
 # Skip image create if the Instagram version already exists
 $instagram_skip_if_exists = "yes"
 
+$instagram_threads = 3

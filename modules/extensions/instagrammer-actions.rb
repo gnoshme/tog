@@ -5,14 +5,14 @@ if $menu_select == 'ig'
   
   pics = choose_files( $current_set + $final_image_directory, ARGV[1])
 
-  pics.each do |pic|  
-    igify pic 
-  end
+  igprocess(pics, $instagram_threads)
 end
 
 if $menu_select == 'ighere'
   pics = choose_files( '.', ARGV[1])
-  pics.each do |pic|
-    igify(pic, dirslash($instagram_image_directory))
-  end
+  igprocess(pics, $instagram_threads)
+end
+
+if $menu_select == 'igthis'
+	igactual ARGV[1], ARGV[2]
 end
