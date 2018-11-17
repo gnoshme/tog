@@ -16,57 +16,45 @@ if $autocreate_instagram_when_moving_to_finals == 'yes'
 end
 
 def igprocess pics, threads
-  pids = Dir.glob('/tmp/togigpid*')
-  pids.each do |pid|
-    File.delete(pid)
+
+  dir=dirslash($current_set + $instagram_image_directory)
+  $threads = []
+  thread_count = 0
+  pics.sort.each do |original|
+    thread_count = thread_count + 1
+    $threads << Thread.new { 
+      igify original
+    }
+    if thread_count >= $instagram_threads
+        sleep 0.1
+        puts ".. waiting for free threads.."
+        $threads.each { |thr| thr.join }
+        thread_count = 0
+    end
   end
-  pics.sort.each do |pic|
-    igify pic
-  end
+  sleep 0.1
+  puts ".. finishing last threads"
+  $threads.each { |thr| thr.join }
 end
 
-def ig_pid_count
-  return Dir.glob('/tmp/togigpid-*').count
-end
 
 def igify original, dir=dirslash($current_set + $instagram_image_directory), threads=$instagram_threads
-
-
-	if Dir.exists?(dir) == false  
-		FileUtils.mkdir_p(dir)
-	end
-
+  unless $dir_checked == true && Dir.exists?(dir) == true  
+    FileUtils.mkdir_p(dir)
+  end
+  $dir_checked = true
   destination = dir + $instagram_suffix + "#{original.split('/').last}"
   
   if File.exists?(destination) && $instagram_skip_if_exists == 'yes'
-    puts ""
     puts "IG     :: Skipping (Exists) :: " + filename(original)
   else
-    if ig_pid_count <= threads
-      pid = "/tmp/togigpid-" + filename(original) 
-      FileUtils.touch(pid)
-      command = togpath("!tog/tog igthis " + original + " " +  destination + " quietmode &")
-      system(command)
-    else
-      #puts "Waiting           :: (" + ig_pid_count.to_s + '/' + threads.to_s + ')'                     
-      loop do
-        #print "."
-        $stdout.flush
-        if ig_pid_count <= threads
-          pid = "/tmp/togigpid-" + filename(original) 
-          FileUtils.touch(pid)
-          command = togpath("!tog/tog igthis " + original + " " +  destination + " quietmode &")
-          system(command)
-          break
-        end
-      end
-    end
+    igactual original, destination
   end
 end
 
+
 def igactual original, destination
-  puts "IG     :: " + filename(original)
-  pid = "/tmp/togigpid-" + filename(original) 
+  puts "Making     :: " + filename(original)
 
   computed_size = $instagram_image_size.to_s + 'x' + $instagram_image_size.to_s
   computed_oversized = ($instagram_image_size * 1.3).to_s + 'x' + ($instagram_image_size * 1.3).to_s  + '!'
@@ -75,7 +63,7 @@ def igactual original, destination
 
   image = MiniMagick::Image.open(original)    
   image.resize computed_size
-  tmpforeground = "/tmp/togig-foreground" + filename(original)
+  tmpforeground = "/tmp/togig-foreground-" + filename(original)
   image.write tmpforeground
   testimage = MiniMagick::Image.open(tmpforeground)
   testimage.colorspace "Gray"
@@ -106,6 +94,5 @@ def igactual original, destination
   end
   File.delete(tmpforeground)
   File.delete(tmpbackground)
-  File.delete(pid)
   result.write destination
 end
