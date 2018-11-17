@@ -85,17 +85,36 @@ def move_pics_to_next favor=""
         end
       end
     end
+
+
     
     if final_images == true
       togprint('h2', 'Performing Auto-Final tasks')
+
+      $threads = []
+      thread_count = 0
+
       (pics - discards).each do |pic|
-      
+              
         $post_final_tasks.each do |task|
+          thread_count = thread_count + 1
           command = task + '("' + destination + pic.split('/').last + '")'
-          eval(command)
+          $threads << Thread.new { 
+            eval(command)
+          }
+          if thread_count >= 12
+            sleep 0.1
+            puts ".. waiting for free threads.."
+            $threads.each { |thr| thr.join }
+            thread_count = 0
+          end
         end
       end
-   end
+      sleep 0.1
+      puts ".. finishing last threads"
+      $threads.each { |thr| thr.join }
+
+    end
   end
 end
 
