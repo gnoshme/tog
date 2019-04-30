@@ -18,15 +18,32 @@ if $menu_select == 'archive'
 	    	end	        
 	    end
 
+			if $offer_export_during_archive_dialog && $offer_export_during_archive_dialog == 'yes'
+	    	choice = yes_no "Do you want to run exporter before archiving?"
+	    	if choice == 'y'
+	    		export = 'yes'
+	    	else
+	    		export = 'no'
+	    	end	        
+	    end
+
 	    puts 
 	    puts "Archive       :: " + $current_set
 	    puts "to            :: " + destination_dir
 	    if declutter == 'yes'
-	    puts "Cleanup dirs  :: " + $declutter_directories
+	    	puts "Cleanup dirs  :: " + $declutter_directories
 	  	end
+	    if export == 'yes'
+	    	puts "Export to  :: " + $export_to
+	  	end
+
 			puts 
 
 	    are_you_sure
+
+	    if export == 'yes'
+	    	doexport set=$current_set
+	    end
 
 	    if declutter == 'yes'
 	    	dodeclutter

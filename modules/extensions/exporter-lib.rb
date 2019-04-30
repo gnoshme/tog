@@ -25,7 +25,7 @@ def set_exif string, file
   return exif.save
 end
 
-def doexport
+def doexport set=nil
 	chkmk($export_to)
 	dirs = []
 	if $export_final_image_directory == 'yes'
@@ -36,7 +36,13 @@ def doexport
   		dirs << dir.strip
   	end	
 	end 
-	allsets.sort.each do |set|
+	if set.nil?
+		exportsets = allsets
+	else
+		exportsets = []
+		exportsets << set
+	end
+	exportsets.sort.each do |set|
 		if  set.to_s.include?($ignore_sets_where_name_includes)
 			togprint('ul', set.upcase)
 			puts "REJECTING rule: " + $ignore_sets_where_name_includes

@@ -4,7 +4,7 @@ $ignore_sets_where_name_includes = "-noexport"
 $ignore_files_where_name_includes ="web, resized"
 $export_final_image_directory = "yes"
 $export_extra_directories = "exported/final-images, exported, exported/finals, 3-finals"
-
+$offer_export_during_archive_dialog = "yes"
 
 # A COUPLE OF OPTIONS TO MAKE THINGS FASTER
 $use_resizer_images_if_available = "yes"
