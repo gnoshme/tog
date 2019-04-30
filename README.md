@@ -1,3 +1,7 @@
+DEPENDENCIES
+- it will tell you what gems you need if you don't have them, and how to install them but the tether module falls on its face on linux if you don't have packages gphoto2 and libgphoto2-dev installed.
+
+
 Not sure that this is ready for prime time but here you go anyway.
 
 If you are checking it out here's the bottom line.
