@@ -15,15 +15,19 @@ if $autocreate_instagram_when_moving_to_finals == 'yes'
 	$post_final_tasks << 'igify'
 end
 
-def igprocess pics, threads
+def igprocess pics, threads, local=false
 
-  dir=dirslash($current_set + $instagram_image_directory)
+  if local == true
+    dir = dirslash($instagram_image_directory)
+  else
+    dir=dirslash($current_set + $instagram_image_directory)
+  end
   $threads = []
   thread_count = 0
   pics.sort.each do |original|
     thread_count = thread_count + 1
     $threads << Thread.new { 
-      igify original
+      igify original, dir
     }
     if thread_count >= $instagram_threads
         sleep 0.1

@@ -10,7 +10,7 @@ end
 
 if $menu_select == 'ighere'
   pics = choose_files( '.', ARGV[1])
-  igprocess(pics, $instagram_threads)
+  igprocess(pics, $instagram_threads, true)
 end
 
 if $menu_select == 'igthis'
