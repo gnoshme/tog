@@ -8,29 +8,31 @@ def save_current_set path, display="no"
 end
 
 def check_set
-  if Dir.exists?($current_set + dirslash($final_image_directory)) == false
-    banner_current_set
-    togprint('error', "Final Images Directory is Missing")
-    togprint('line', "If this is an older set created before TOG but you want to use")
-    togprint('line', "features, you're going to need the final images directory" )
-    puts
-    array = ["Create Final Image Directory (will make this error go away)", "Create all the TOG directories", "Leave this directory", "Exit"]
-    menu_choice = menu_from_array array
-    case menu_choice + 1
-      when 1
-        Dir.mkdir($current_set + dirslash($final_image_directory))
-      when 2
-        create_set_dirs $current_set
-      when 3
-        clear_current_set
-        exit
-      when 4
-        exit
+  if Dir.exists?($current_set) == false
+    clear_current_set
+    if Dir.exists?($current_set + dirslash($final_image_directory)) == false
+      banner_current_set
+      togprint('error', "Final Images Directory is Missing")
+      togprint('line', "If this is an older set created before TOG but you want to use")
+      togprint('line', "features, you're going to need the final images directory" )
+      puts
+      array = ["Create Final Image Directory (will make this error go away)", "Create all the TOG directories", "Leave this directory", "Exit"]
+      menu_choice = menu_from_array array
+      case menu_choice + 1
+        when 1
+          Dir.mkdir($current_set + dirslash($final_image_directory))
+        when 2
+          create_set_dirs $current_set
+        when 3
+          clear_current_set
+          exit
+        when 4
+          exit
+      end
+      cont
     end
-    cont
   end
 end
-
 def create_set_dirs dir_path
     chkmk(dir_path)    
     chkmk( dir_path + $raw_file_directory)
