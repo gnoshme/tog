@@ -48,7 +48,7 @@ def check_gem_installed gem, extrainfo=nil
 end
 
 def is_installed mod
-   if File.exists?(pathify($settings_path, mod))
+   if File.exist?(pathify($settings_path, mod))
      return true
    else
      return false
@@ -64,8 +64,8 @@ def installmod mod
     debug(5, 'Installing: + mod')
     modtype = allmods.find { |key, values| values.include?(mod) }.first
     source = pathify(dirslash('modules/' + modtype), mod, '-default-settings')
-    if File.exists?(source)
-      if File.exists?(destination)
+    if File.exist?(source)
+      if File.exist?(destination)
         togprint('h2',"Wait.. that's already installed")
       else
         togprint('h2',"Installing Extension :: " + mod)
@@ -88,7 +88,7 @@ end
 
 def uninstallmod mod
   settings = pathify($settings_path, mod)
-  if File.exists?(settings)
+  if File.exist?(settings)
     togprint('h2',"Removing Extension :: " + mod)
     FileUtils.mv(settings, '/tmp')
     allmods force=true
@@ -150,7 +150,7 @@ def load_mods modtype, postfix
 
   # Just a little something so that I can keep all the settings files as the defaults but override just for me
   # Life a bit easier that way.
-  if File.exists?(togpath('!tog/' + $settings_path + 'overrides.rb'))
+  if File.exist?(togpath('!tog/' + $settings_path + 'overrides.rb'))
     load(togpath('!tog/' + $settings_path + 'overrides.rb'))
   end
 end

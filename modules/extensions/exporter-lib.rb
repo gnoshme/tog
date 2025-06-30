@@ -48,7 +48,7 @@ def doexport set=nil
 			puts "REJECTING rule: " + $ignore_sets_where_name_includes
 			puts
 		else
-			puts
+			puts "ARCHIVING: " + set
 			exifdate = nil
 			togprint('ul', set.upcase)
 			dirs.each do |dir|

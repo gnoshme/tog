@@ -53,8 +53,7 @@ if $menu_select == 'tether'
 
   	loop do
 	  	camera.close
-
-			system('gphoto2 --capture-tethered --hook-script=' + hook_path )
+			system('env LANG=C gphoto2 --debug --debug-logfile=/tmp/my-logfile.txt  --capture-tethered --hook-script=' + hook_path )
 			if $make_sound_on_disconnect == 'yes'
 				disconnect_sound
 				sleep 5

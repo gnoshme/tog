@@ -19,7 +19,7 @@ end
 def test_exists type, location
 	case type
 	when "file"
-		if ! File.exists?(location)
+		if ! File.exist?(location)
 			exittests "MISSING FILE :: " + location
 		end
 	end
@@ -28,7 +28,7 @@ end
 def test_notexists type, location
 	case type
 	when "file"
-		if File.exists?(location)
+		if File.exist?(location)
 			exittests "FILE SHOULD NOT BE HERE :: " + location
 		end
 	end

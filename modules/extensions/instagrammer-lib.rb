@@ -43,13 +43,13 @@ end
 
 
 def igify original, dir=dirslash($current_set + $instagram_image_directory), threads=$instagram_threads
-  unless $dir_checked == true && Dir.exists?(dir) == true  
+  unless $dir_checked == true && Dir.exist?(dir) == true  
     FileUtils.mkdir_p(dir)
   end
   $dir_checked = true
   destination = dir + $instagram_suffix + "#{original.split('/').last}"
   
-  if File.exists?(destination) && $instagram_skip_if_exists == 'yes'
+  if File.exist?(destination) && $instagram_skip_if_exists == 'yes'
     puts "IG     :: Skipping (Exists) :: " + filename(original)
   else
     igactual original, destination

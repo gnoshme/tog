@@ -13,6 +13,6 @@ end
 if $menu_select == 'resizehere'
   pics = choose_files( '.', ARGV[1])
   pics.each do |pic|
-    doresize(pic, dirslash($resized_image_directory))
+    doresize(pic, dirslash($resized_image_directory), ARGV[2])
   end
 end

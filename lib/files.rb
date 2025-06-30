@@ -45,7 +45,7 @@ def final_files
 end
 
 def chkmk dir
-  unless Dir.exists?(dir)
+  unless Dir.exist?(dir)
     togprint('line', 'CREATING :: ' + dir)
     FileUtils.mkdir_p(dir)
   end

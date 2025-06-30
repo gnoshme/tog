@@ -56,6 +56,7 @@ def doimport
 
 	choice = (menu_from_array menu_array)
 	dir = menu_array[choice.to_i].split(':: ').last
+
 	files = Dir.glob(dirslash(dir) + '**/*').reject {|fn| File.directory?(fn) }
 	match_string = $file_types_to_import.upcase
 	matches = []
@@ -74,8 +75,12 @@ def doimport
 		clear_screen
 		matches.each do |file|
 			togprint('line', 'DOING :: ' + $copy_or_move_files.upcase + '  :: ' + filename(file))
-			destination = $current_set + dirslash($raw_file_directory) + filename(file) 
-			if File.exists?(destination)
+			if $create_import_subdirectories == "yes"
+				destination = $current_set + dirslash($raw_file_directory) + dirslash(filename(file).split(".").last.downcase) + filename(file)
+			else 
+				destination = $current_set + dirslash($raw_file_directory) + filename(file) 
+			end
+			if File.exist?(destination)
 				togprint('line', "ALREADY EXISTS :: " + filename(file))
 			else
 				if $copy_or_move_files == 'move'

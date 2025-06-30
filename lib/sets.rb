@@ -8,9 +8,9 @@ def save_current_set path, display="no"
 end
 
 def check_set
-  if Dir.exists?($current_set) == false
+  if Dir.exist?($current_set) == false
     clear_current_set
-    if Dir.exists?($current_set + dirslash($final_image_directory)) == false
+    if Dir.exist?($current_set + dirslash($final_image_directory)) == false
       banner_current_set
       togprint('error', "Final Images Directory is Missing")
       togprint('line', "If this is an older set created before TOG but you want to use")
@@ -34,14 +34,22 @@ def check_set
   end
 end
 def create_set_dirs dir_path
-    chkmk(dir_path)    
-    chkmk( dir_path + $raw_file_directory)
-    chkmk( dir_path + $final_image_directory )
-    chkmk( dir_path + $discards_directory )
-    create_workflow_dirs(dir_path, workflow_dir_count)
-    $other_shoot_directories.split(',').each do |dir|
-      chkmk( dir_path + dir.strip )
+  chkmk(dir_path)    
+  chkmk( dir_path + $raw_file_directory)
+  chkmk( dir_path + $final_image_directory )
+  chkmk( dir_path + $discards_directory )
+  create_workflow_dirs(dir_path, workflow_dir_count)
+  $other_shoot_directories.split(',').each do |dir|
+    chkmk( dir_path + dir.strip )
+  end
+  load ($togpath + "/modules/extensions/importer-default-settings.rb")
+  load ($togpath + "/settings/importer.rb")
+  if $create_import_subdirectories == "yes"
+   $file_types_to_import.split(",").each do |extension|
+      subdir = extension.split(".").last.downcase
+      chkmk( dir_path + $raw_file_directory + "/" + subdir)
     end
+  end
 
 end
 
@@ -61,9 +69,9 @@ end
 
 def load_current_set display="no"
   if $current_set_file
-    if File.exists?($current_set_file)
+    if File.exist?($current_set_file)
       current_set =  File.read($current_set_file)
-      if ! Dir.exists?(current_set)
+      if ! Dir.exist?(current_set)
         return false
       else
         $current_set = current_set

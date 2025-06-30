@@ -7,7 +7,7 @@ end
 
 def post_mv source, destination
   if $during_post_actions_overwrite_if_file_already_exists == 'no'
-    if File.exists?(destination + filename(source)) 
+    if File.exist?(destination + filename(source)) 
       togprint('line', 'ALREADY EXISTS!! :: ' + source)
     else
       FileUtils.mv(source, destination)
@@ -121,7 +121,7 @@ end
 
 def createset_action dir_path
 	dir_path = dir_path + '/'
-  if Dir.exists?(dir_path)
+  if Dir.exist?(dir_path)
   	togprint('error', "That directory already exists")
   else
     create_set_dirs dir_path
