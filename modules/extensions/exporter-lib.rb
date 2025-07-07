@@ -65,7 +65,20 @@ def doexport set=nil
 							end 
 						end
 						uname = set.split('/').last + '-' + dir.gsub('/','-') + '-' + pic.split('/').last
-						destination = (dirslash($export_to) + uname)
+						# New for 2025.  
+						# It's fine to have it all in a folder then organized by some software (like shotwell) but then when you want to actually 
+						# do something with it, the "Show In Folder" feature is really heavy.
+						if uname.include?("-")
+							if uname.split("-").count > 2
+								destination_dir = uname.split("-")[0..1].join("-")
+								else									
+								destination_dir = uname.split("-").first
+							end
+							chkmk(destination_dir)
+							destination = (dirslash($export_to) + (dirslash(destination_dir)) + uname)
+						else
+							destination = (dirslash($export_to) + uname)
+						end
 						if File.exist?(destination )
 							puts "already have :: " + filename(pic)
 						else
